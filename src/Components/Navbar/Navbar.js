@@ -3,7 +3,7 @@ import "./Navbar.css";
 
 const Navbar = () => {
 
-    function handleClick() {
+    const handleClick = () => {
         const navLinks = document.querySelector(".nav__links");
         const navIcon = document.querySelector(".nav__icon i");
         
@@ -16,7 +16,7 @@ const Navbar = () => {
             navIcon.classList.remove("fa-times");
             navIcon.classList.add("fa-bars");
         }
-    }
+    };
 
   return (
     <div>
@@ -42,18 +42,18 @@ const Navbar = () => {
             </div>
             <ul className="nav__links active">
                 <li className="link">
-                    <a href="../Landing_Page/LandingPage.html">Home</a>
+                    <a href="/">Home</a>
                 </li>
                 <li className="link">
-                    <a href="#">Appointments</a>
+                    <a href="/">Appointments</a>
                 </li>
                 <li className="link">
-                    <a href="../Sign_Up//Sign_Up.html">
+                    <a href="/signup">
                     <button className="btn1">Sign Up</button>
                     </a>
                 </li>
                 <li className="link">
-                    <a href="../Login/Login.html">
+                    <a href="/login">
                     <button className="btn1">Login</button>
                     </a>
                 </li>
