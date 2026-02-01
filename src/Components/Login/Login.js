@@ -1,7 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Login.css";
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../config';
 
 const Login = () => {
+
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (sessionStorage.getItem("auth-token")) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+    const login = async (e) => {
+        e.preventDefault();
+        // Send a POST request to the login API endpoint
+        const res = await fetch(`${API_URL}/api/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        });
+        // Parse the response JSON
+        const json = await res.json();
+        if (json.authtoken) {
+          // If authentication token is received, store it in session storage
+          sessionStorage.setItem('auth-token', json.authtoken);
+          sessionStorage.setItem('email', email);
+          // Redirect to home page and reload the window
+          navigate('/');
+          window.location.reload();
+        } else {
+          // Handle errors if authentication fails
+          if (json.errors) {
+            for (const error of json.errors) {
+              alert(error.msg);
+            }
+          } else {
+            alert(json.error);
+          }
+        }
+    };
+
     return (
         <div className="container">
             <div className="login-grid">
@@ -9,14 +56,16 @@ const Login = () => {
                     <h1>Login</h1>
                 </div>
                 <div className="login-text1">
-                    Are you a new member? <span><a href="signup" style={{color: "#2190FF"}}> Sign Up Here</a></span>
+                    Are you a new member? <span><Link to="/signup" style={{color: "#2190FF"}}> Sign Up Here</Link></span>
                 </div>
                 <br />
                 <div className="login-form">
-                    <form>
+                    <form onSubmit={login}>
                         <div className="form-group">
-                            <label for="email">Email</label>
+                            <label htmlForor="email">Email</label>
                             <input
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
                                 type="email"
                                 name="email"
                                 id="email"
@@ -28,8 +77,10 @@ const Login = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                             <input
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
                                 type="password"
                                 name="password"
                                 id="password"

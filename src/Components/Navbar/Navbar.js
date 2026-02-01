@@ -1,7 +1,26 @@
 import React from 'react';
+import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
+    const isLoggedIn = sessionStorage.getItem("auth-token");
+    const email = sessionStorage.getItem("email");
+    const nameFromStorage = sessionStorage.getItem("name");
+
+    const username =
+    nameFromStorage || (email ? email.split("@")[0] : "");
+
+    const handleLogout = () => {
+        sessionStorage.removeItem("auth-token");
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("phone");
+
+        navigate("/login");
+        window.location.reload();
+    };
 
     const handleClick = () => {
         const navLinks = document.querySelector(".nav__links");
@@ -22,7 +41,7 @@ const Navbar = () => {
     <div>
         <nav>
             <div className="nav__logo">
-                <a href="/">
+                <Link to="/">
                     StayHealthy 
                     <svg xmlns="http://www.w3.org/2000/svg" height="26" width="26" viewBox="0 0 1000 1000" style={{ fill: "#3685fb" }}>
                         <title>Doctor With Stethoscope SVG icon</title>
@@ -34,7 +53,7 @@ const Navbar = () => {
                             </g>
                         </g>
                     </svg>
-                </a>
+                </Link>
                 <span>.</span>
             </div>
             <div className="nav__icon" onClick={handleClick}>
@@ -42,21 +61,36 @@ const Navbar = () => {
             </div>
             <ul className="nav__links active">
                 <li className="link">
-                    <a href="/">Home</a>
+                    <Link to="/">Home</Link>
                 </li>
                 <li className="link">
-                    <a href="/">Appointments</a>
+                    <Link to="/">Appointments</Link>
                 </li>
-                <li className="link">
-                    <a href="/signup">
-                    <button className="btn1">Sign Up</button>
-                    </a>
-                </li>
-                <li className="link">
-                    <a href="/login">
-                    <button className="btn1">Login</button>
-                    </a>
-                </li>
+                {!isLoggedIn ? (
+                    <>
+                        <li className="link">
+                        <Link to="/signup">
+                            <button className="btn1">Sign Up</button>
+                        </Link>
+                        </li>
+                        <li className="link">
+                        <Link to="/login">
+                            <button className="btn1">Login</button>
+                        </Link>
+                        </li>
+                    </>
+                    ) : (
+                    <>
+                        <li className="link welcome-user">
+                            Welcome, <strong>{username}</strong>
+                        </li>
+                        <li className="link">
+                            <button className="btn1" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </li>
+                    </>
+                )}
             </ul>
         </nav>
     </div>
