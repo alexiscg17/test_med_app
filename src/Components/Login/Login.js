@@ -7,6 +7,7 @@ const Login = () => {
 
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState('');
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,13 +40,14 @@ const Login = () => {
           window.location.reload();
         } else {
           // Handle errors if authentication fails
-          if (json.errors) {
-            for (const error of json.errors) {
-              alert(error.msg);
+            if (!response.ok && json.error) {
+                const fieldErrors = {};
+                json.error.forEach(err => {
+                    fieldErrors[err.param] = err.msg;
+                });
+                setErrors(fieldErrors);
+                return;
             }
-          } else {
-            alert(json.error);
-          }
         }
     };
 
@@ -62,7 +64,7 @@ const Login = () => {
                 <div className="login-form">
                     <form onSubmit={login}>
                         <div className="form-group">
-                            <label htmlForor="email">Email</label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 value={email} 
                                 onChange={(e) => setEmail(e.target.value)} 
@@ -75,6 +77,7 @@ const Login = () => {
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                 title="Please enter a valid email address"
                             />
+                        {errors.email && <div className="err" style={{ color: 'red' }}>{errors.email}</div>}
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>

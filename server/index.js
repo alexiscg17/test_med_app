@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const connectToMongo = require('./db');
+const user_routes = require('./routes/auth')
 const app = express();
 
 
@@ -19,7 +20,7 @@ app.use(cors());
 connectToMongo();
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', user_routes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

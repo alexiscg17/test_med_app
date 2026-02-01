@@ -9,7 +9,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const [showerr, setShowerr] = useState(''); // State to show error messages
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate(); // Navigation hook from react-router
 
     const register = async (e) => {
@@ -39,12 +39,13 @@ const SignUp = () => {
             navigate("/");
             window.location.reload(); // Refresh the page
         } else {
-            if (json.errors) {
-                for (const error of json.errors) {
-                    setShowerr(error.msg); // Show error messages
-                }
-            } else {
-                setShowerr(json.error);
+            if (!response.ok && json.error) {
+                const fieldErrors = {};
+                json.error.forEach(err => {
+                    fieldErrors[err.param] = err.msg;
+                });
+                setErrors(fieldErrors);
+                return;
             }
         }
     };
@@ -83,7 +84,7 @@ const SignUp = () => {
                 pattern="[A-Za-z\s]+" // only letters and spaces
                 title="Name should contain only letters"
               />
-              {showerr && <div className="err" style={{ color: 'red' }}>{showerr}</div>}
+              {errors.name && <div className="err" style={{ color: 'red' }}>{errors.name}</div>}
             </div>
 
             <div className="form-group">
@@ -100,6 +101,7 @@ const SignUp = () => {
                 pattern="[0-9]{10}" // exactly 10 digits
                 title="Phone number must be 10 digits"
               />
+              {errors.phone && <div className="err" style={{ color: 'red' }}>{errors.phone}</div>}
             </div>
 
             <div className="form-group">
@@ -113,9 +115,9 @@ const SignUp = () => {
                 required
                 className="form-control"
                 placeholder="Enter your email"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 title="Please enter a valid email address"
               />
+              {errors.email && <div className="err" style={{ color: 'red' }}>{errors.email}</div>}
             </div>
 
             <div className="form-group">
@@ -130,6 +132,7 @@ const SignUp = () => {
                 className="form-control"
                 placeholder="Enter your password"
               />
+              {errors.password && <div className="err" style={{ color: 'red' }}>{errors.password}</div>}
             </div>
 
             <div className="btn-group">
