@@ -3,13 +3,13 @@ import "./SignUp.css";
 
 const SignUp = () => {
   return (
-    <div className="container" style={{ marginTop: "5%" }}>
+    <div className="container">
       <div className="signup-grid">
         <div className="signup-text">
           <h1>Sign Up</h1>
         </div>
 
-        <div className="signup-text1" style={{ textAlign: "left" }}>
+        <div className="signup-text1">
           Already a member?{" "}
           <span>
             <a href="/login" style={{ color: "#2190FF" }}>
@@ -29,6 +29,10 @@ const SignUp = () => {
                 required
                 className="form-control"
                 placeholder="Enter your name"
+                minLength={2} // must be at least 2 characters
+                maxLength={50} // limit to 50 characters
+                pattern="[A-Za-z\s]+" // only letters and spaces
+                title="Name should contain only letters"
               />
             </div>
 
@@ -41,6 +45,8 @@ const SignUp = () => {
                 required
                 className="form-control"
                 placeholder="Enter your phone number"
+                pattern="[0-9]{10}" // exactly 10 digits
+                title="Phone number must be 10 digits"
               />
             </div>
 
@@ -53,6 +59,8 @@ const SignUp = () => {
                 required
                 className="form-control"
                 placeholder="Enter your email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Please enter a valid email address"
               />
             </div>
 
