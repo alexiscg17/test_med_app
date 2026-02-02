@@ -40,7 +40,7 @@ const Login = () => {
           window.location.reload();
         } else {
           // Handle errors if authentication fails
-            if (!response.ok && json.error) {
+            if (!res.ok && json.error) {
                 const fieldErrors = {};
                 json.error.forEach(err => {
                     fieldErrors[err.param] = err.msg;
