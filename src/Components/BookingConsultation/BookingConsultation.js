@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './BookingConsultation.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import FindDoctorSearchIC from './FindDoctorSearch/FindDoctorSearch';
-import DoctorCardIC from './DoctorCard/DoctorCard';
+import FindDoctorSearch from './FindDoctorSearch/FindDoctorSearch';
+import DoctorCard from './DoctorCard/DoctorCard';
 
 const BookingConsultation = () => {
     const [searchParams] = useSearchParams();
@@ -20,7 +20,6 @@ const BookingConsultation = () => {
                 setFilteredDoctors(filtered);
                 
                 setIsSearched(true);
-                window.reload()
             } else {
                 setFilteredDoctors([]);
                 setIsSearched(false);
@@ -60,14 +59,14 @@ const BookingConsultation = () => {
     return (
         <center>
             <div  className="searchpage-container">
-            <FindDoctorSearchIC onSearch={handleSearch} />
+            <FindDoctorSearch onSearch={handleSearch} />
             <div className="search-results-container">
             {isSearched ? (
                 <center>
                     <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
                     <h3>Book appointments with minimum wait-time & verified doctor details</h3>
                     {filteredDoctors.length > 0 ? (
-                    filteredDoctors.map(doctor => <DoctorCardIC className="doctorcard" {...doctor} key={doctor.name} />)
+                    filteredDoctors.map(doctor => <DoctorCard className="doctorcard" {...doctor} key={doctor.name} />)
                     ) : (
                     <p>No doctors found.</p>
                     )}

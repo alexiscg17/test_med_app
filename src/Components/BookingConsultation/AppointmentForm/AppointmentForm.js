@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
+const AppointmentForm = ({ doctorName, doctorSpeciality, doctorExperience, doctorRatings, onSubmit }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
@@ -10,12 +10,21 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
     e.preventDefault();
 
     onSubmit({
-      name,
-      phoneNumber,
+      doctor: {
+        name: doctorName,
+        speciality: doctorSpeciality,
+        experience: doctorExperience,
+        ratings: doctorRatings,
+      },
+      patient: {
+        name,
+        phoneNumber,
+      },
       appointmentDate,
       appointmentTime,
     });
 
+    // Reset form fields
     setName('');
     setPhoneNumber('');
     setAppointmentDate('');
@@ -25,7 +34,7 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
   return (
     <form onSubmit={handleFormSubmit} className="appointment-form">
       <div className="form-group">
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="name">Your Name:</label>
         <input
           type="text"
           id="name"
