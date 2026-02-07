@@ -157,3 +157,47 @@ nav {
     background-color:#3685fb; /* Hover effect */
     color:white; /* Hover effect */
 }
+.welcome-user {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Dropdown Card */
+.dropdown-card {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 200px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-card li {
+  padding: 10px 15px;
+  transition: background 0.2s;
+}
+
+.dropdown-card li:hover {
+  background: #f5f5f5;
+}
+
+.dropdown-card a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

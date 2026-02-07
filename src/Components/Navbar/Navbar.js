@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 
@@ -10,16 +10,13 @@ const Navbar = () => {
     const nameFromStorage = sessionStorage.getItem("name");
 
     const username =
-    nameFromStorage || (email ? email.split("@")[0] : "");
+        nameFromStorage || (email ? email.split("@")[0] : "");
+
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const handleLogout = () => {
-        sessionStorage.removeItem("auth-token");
-        sessionStorage.removeItem("email");
-        sessionStorage.removeItem("name");
-        sessionStorage.removeItem("phone");
-
+        sessionStorage.clear();
         navigate("/login");
-        window.location.reload();
     };
 
     const handleClick = () => {
@@ -38,10 +35,9 @@ const Navbar = () => {
     };
 
   return (
-    <div>
-        <nav>
-            <div className="nav__logo">
-                <Link to="/">
+    <nav>
+        <div className="nav__logo">
+            <Link to="/">
                     StayHealthy 
                     <svg xmlns="http://www.w3.org/2000/svg" height="26" width="26" viewBox="0 0 1000 1000" style={{ fill: "#3685fb" }}>
                         <title>Doctor With Stethoscope SVG icon</title>
@@ -55,52 +51,55 @@ const Navbar = () => {
                     </svg>
                 </Link>
                 <span>.</span>
-            </div>
-            <div className="nav__icon" onClick={handleClick}>
-                <i className="fa fa-times fa fa-bars"></i>
-            </div>
-            <ul className="nav__links active">
-                <li className="link">
-                    <Link to="/">Home</Link>
-                </li>
-                <li className="link">
-                    <Link to="/appointments">Appointments</Link>
-                </li>
-                <li className="link">
-                    <Link to="/instant-consultation">Instant Consultation</Link>
-                </li>
-                <li className="link">
-                    <Link to="/reviews">Reviews</Link>
-                </li>
-                {!isLoggedIn ? (
-                    <>
-                        <li className="link">
-                        <Link to="/signup">
-                            <button className="btn1">Sign Up</button>
-                        </Link>
-                        </li>
-                        <li className="link">
-                        <Link to="/login">
-                            <button className="btn1">Login</button>
-                        </Link>
-                        </li>
-                    </>
-                    ) : (
-                    <>
-                        <li className="link welcome-user">
-                            Welcome, <strong>{username}</strong>
-                        </li>
-                        <li className="link">
-                            <button className="btn1" onClick={handleLogout}>
-                                Logout
-                            </button>
-                        </li>
-                    </>
-                )}
-            </ul>
-        </nav>
-    </div>
-  )
-}
+        </div>
 
-export default Navbar
+        <div className="nav__icon" onClick={handleClick}>
+            <i className="fa fa-times fa fa-bars"></i>
+        </div>
+
+        <ul className="nav__links active">
+            <li className="link"><Link to="/">Home</Link></li>
+            <li className="link"><Link to="/appointments">Appointments</Link></li>
+            <li className="link"><Link to="/instant-consultation">Instant Consultation</Link></li>
+            <li className="link"><Link to="/reviews">Reviews</Link></li>
+
+            {!isLoggedIn ? (
+                <>
+                    <li className="link">
+                        <Link to="/signup"><button className="btn1">Sign Up</button></Link>
+                    </li>
+                    <li className="link">
+                        <Link to="/login"><button className="btn1">Login</button></Link>
+                    </li>
+                </>
+            ) : (
+                <>
+                <li 
+                    className="link welcome-user"
+                    onMouseEnter={() => setShowDropdown(true)}
+                    onMouseLeave={() => setShowDropdown(false)}
+                >
+                    Welcome, <strong>{username}</strong>
+
+                    {showDropdown && (
+                        <div className="dropdown-card">
+                            <ul>
+                                <li><Link to="/profile">Your Profile</Link></li>
+                                <li><Link to="/reports">Your Reports</Link></li>
+                            </ul>
+                        </div>
+                    )}
+                </li>
+                <li className="link">
+                    <button className="btn1" onClick={handleLogout}>
+                        Logout
+                    </button>
+                </li>
+                </>
+            )}
+        </ul>
+    </nav>
+  );
+};
+
+export default Navbar;
