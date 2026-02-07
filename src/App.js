@@ -8,6 +8,7 @@ import InstantConsultation from "./Components/InstantConsultationBooking/Instant
 import BookingConsultation from './Components/BookingConsultation/BookingConsultation';
 import Reviews from './Components/ReviewForm/Reviews';
 import ProfileCard from './Components/ProfileCard/ProfileCard'
+import ReportLayout from './Components/ReportLayout/ReportLayout'
  
 function App() {
 
@@ -16,13 +17,14 @@ function App() {
         <BrowserRouter>
             <Notification>
                 <Routes>
-                    <Route path="/" element={<LandingPage/>}/>
-                    <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/appointments" element={<BookingConsultation/>}/>
+                    <Route path="/" element={<LandingPage/>} />
+                    <Route path="/signup" element={<SignUp/>} />
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/appointments" element={<BookingConsultation/>} />
                     <Route path="/instant-consultation" element={<InstantConsultation/>} />
                     <Route path="/reviews" element={<Reviews/>} />
                     <Route path="/profile" element={<ProfileCard/>} />
+                    <Route path="/reports" element={<ReportLayout/>} />
                 </Routes>
             </Notification>
         </BrowserRouter>
