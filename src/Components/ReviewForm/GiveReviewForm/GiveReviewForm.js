@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 const GiveReviewForm = ({ doctorName, onSubmit }) => {
+  const [name, setName] = useState('');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [warning, setWarning] = useState(false);
@@ -13,7 +14,7 @@ const GiveReviewForm = ({ doctorName, onSubmit }) => {
       return;
     }
 
-    onSubmit({ review, rating });
+    onSubmit({ name, review, rating });
   };
 
   return (
@@ -22,6 +23,16 @@ const GiveReviewForm = ({ doctorName, onSubmit }) => {
 
       {warning && <p className="warning">All fields required</p>}
 
+      <div className="form-group">
+            <label htmlFor="name">Your Name:</label>
+            <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            />
+      </div>
       <div className="form-group">
         <label>Review</label>
         <textarea

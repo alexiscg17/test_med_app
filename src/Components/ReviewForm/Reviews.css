@@ -36,4 +36,50 @@
     color: red;
     font-weight: bold;
   }
-  
+  /* Styles for form groups in the signup form */
+.form-group {
+    margin-bottom: 20px; /* Add bottom margin to form groups */
+    text-align: left;
+}
+
+.form-group label {
+    display: block; /* Display labels as blocks */
+    margin-bottom: 5px; /* Add bottom margin to labels */
+    font-weight: bold; /* Set font weight to bold for labels */
+}
+
+/* Styles for form controls in the signup form */
+.form-control {
+    width: 100%;
+    padding: 8px; /* Add padding inside form controls */
+    font-size: 16px; /* Set font size */
+    border: 1px solid #ccc; /* Add border with color */
+    border-radius: 4px; /* Add border radius for rounded corners */
+}
+
+/* Styles for button group in the signup form */
+.btn-group {
+    margin-top: .0001px; /* Add a small top margin to button group */
+    margin-bottom: 20px; /* Add bottom margin to button group */
+}
+
+/* Styles for buttons in the signup form */
+.btn {
+    padding: 10px 20px; /* Set padding for buttons */
+    font-size: 16px; /* Set font size for buttons */
+    border: none; /* Remove button borders */
+    border-radius: 4px; /* Add border radius for rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Styles for primary button in the signup form */
+.btn-primary {
+    background-color: #007bff; /* Set background color for primary button */
+    color: #fff; /* Set text color for primary button */
+}
+
+/* Styles for danger button in the signup form */
+.btn-danger {
+    background-color: #dc3545; /* Set background color for danger button */
+    color: #fff; /* Set text color for danger button */
+}

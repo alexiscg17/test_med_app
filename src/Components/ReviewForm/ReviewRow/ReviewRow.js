@@ -32,13 +32,15 @@ const ReviewRow = ({ doctor, index }) => {
             disabled={!!review}
             onClick={() => setShowForm(true)}
           >
-            {review ? 'Reviewed' : 'Open Form'}
+            {review ? 'Reviewed' : 'Click Here'}
           </button>
         </td>
         <td>
           {review ? (
             <>
               ⭐ {review.rating}/5  
+              <br />
+              {review.name}
               <br />
               {review.review}
             </>
